@@ -1,63 +1,105 @@
-class Card{
-    suit = null;
-    face = null;
-    faceUp = false
+class Card {
+  suit = null;
+  face = null;
+  faceUp = false;
 
-    constructor(suit,face,   faceUp = false){
-        this.suit = suit;
-        this.face = face;
-        this.faceUp = faceUp
-    }
-    
+  constructor(suit, face, faceUp = false) {
+    this.suit = suit;
+    this.face = face;
+    this.faceUp = faceUp;
+  }
 }
 
-class Deck{
-    /**@type {Card[]}*/
+class Deck {
+  /**@type {Card[]}*/
 
+  cards = [];
+  /**
+   * @param {Card[]?} cards */
 
-    cards = [];
-    /**
-     * @param {Card[]?} cards */
+  constructor(cards = []) {
+    this.cards = cards;
+  }
+  get top() {
+    return this.cards[topIndex];
+  }
+  get topIndex(){
+    return this.cards.length - 1
+  }
+  }
 
-    constructor(cards = []){
-        this.cards= cards
+  canFlip() {
+    return this.cards.length > 0 && this.top.faceUp == false;
+  }
+  canTake(index) {
+    throw new TypeError(`Cannon  invoke abstract method`);
+  }
+  /**
+   *
+   * @param {Card | Card[]} cards
+   */
 
+  canPlace(cards) {
+    throw new TypeError(`Cannon  invoke abstract method`);
+  }
+
+  flip() {
+    if (this.canFlip() == false) {
+      throw new Error("Cannot flip card");
     }
 
-    canFlip(){
-        throw new TypeError(`Cannon  invoke abstract method`);
+    this.top.faceUp = true;
+  }
+  take(index) {
+    throw new TypeError(`Cannon  invoke abstract method`);
+  }
+  place(cards) {
+    throw new TypeError(`Cannon  invoke abstract method`);
+  }
+}
 
-    }
-    canTake(index){
-        throw new TypeError(`Cannon  invoke abstract method`);
-
-        
-    }
-    /**
-     * 
-     * @param {Card | Card[]} cards 
-     */
-
-    canPlace(cards){
-        throw new TypeError(`Cannon  invoke abstract method`);
-
-        
-    }
-
-    flip(){
-        throw new TypeError(`Cannon  invoke abstract method`);
+class Stock extends Deck{
+    canTake(index) {
+      return false
+      }
+      /**
+       *
+       * @param {Card | Card[]} cards
+       */
+    
+      canPlace(cards) {
+        return false
+      }
 
 
-    }
-    take(index){
-        throw new TypeError(`Cannon  invoke abstract method`);
+      take(index) {
+        throw new Error(`Cannon  take from stock`);
+      }
+      place(cards) {
+        throw new Error(`Cannon place on stock`);
+      }
 
-        
-    }
-    place(cards){
-        throw new TypeError(`Cannon  invoke abstract method`);
+}
 
-        
-    }
+class Waste extends Deck{
+    canTake(index) {
+      return this.cards.length > 0 && index == this.topIndex
+      }
+      /**
+       *
+       * @param {Card | Card[]} cards
+       */
+    
+      canPlace(cards) {
+        return false
+      }
+
+
+      take(index) {
+        throw new Error(`Cannon  take from stock`);
+      }
+      place(cards) {
+        throw new Error(`Cannon place on stock`);
+      }
 
 }
