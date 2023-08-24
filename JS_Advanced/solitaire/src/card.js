@@ -1,4 +1,4 @@
-const faces = {
+export const faces = {
     Ace: 1,
     Two: 2,
     Three: 3,
@@ -14,14 +14,14 @@ const faces = {
     King: 13,
 }
 
-const suits = {
+export const suits = {
     Clubs: 'clubs',
     Diamonds: 'diamonds',
     Heards: 'heards',
     Spades: 'spades',
 }
 
-const colors = {
+export const colors = {
     clubs: 'black',
     diamonds: 'red',
     heards: 'red',
@@ -30,7 +30,7 @@ const colors = {
 
 
 
-class Card {
+export class Card {
     /**@type {keyof suits} */
   suit = null;
     /**@type {keyof faces} */
@@ -53,7 +53,7 @@ class Card {
   }
 }
 
-class Deck {
+export class Deck {
   /**@type {Card[]}*/
 
   cards = [];
@@ -112,7 +112,7 @@ class Deck {
         throw new Error("Cannot place card");
       }
       if(Array.isArray(cards) == false){
-        cards = [cards]
+        cards = [cards];
       }
 
       this.cards.push(...cards)
@@ -120,7 +120,7 @@ class Deck {
   }
 }
 
-class Stock extends Deck{
+export class Stock extends Deck{
     canTake(index) {
       return false
       }
@@ -137,7 +137,7 @@ class Stock extends Deck{
     
 }
 
-class Waste extends Deck{
+export class Waste extends Deck{
     canTake(index) {
       return this.size > 0 && index == this.topIndex;
       }
@@ -153,7 +153,7 @@ class Waste extends Deck{
 
 }
 
-class Foundation extends Deck{
+export class Foundation extends Deck{
     /**@type {keyof suits} */
     suit = null;
     /**
@@ -186,7 +186,7 @@ class Foundation extends Deck{
 
 }
 
-class Pile extends Deck{
+export class Pile extends Deck{
    
     canTake(index) {
       return this.size > 0 && index == this.cards[index].faceUp;
@@ -197,12 +197,13 @@ class Pile extends Deck{
        */
     
       canPlace(cards) {
-        if(Array.isArray(cards)){
-            return false
+        if(Array.isArray(cards) == false){
+            cards = [cards];
         }
-        const bottomCar = cards[0]
+        /**@type {Card} */
+        const bottomCard = cards[0]
        return ((cards.face == faces.King && this.size == 0)
-        || (this.size > 0 &&(bottomCar.face + 1) ==this.top.face)) ;
+        || (this.size > 0 &&(bottomCard.face + 1) ==this.top.face) && colors[bottomCard.suit] != colors[this.suit]) ;
         
         
       }
