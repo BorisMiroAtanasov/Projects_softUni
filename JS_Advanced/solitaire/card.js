@@ -1,7 +1,43 @@
+const faces = {
+    Ace: 1,
+    Two: 2,
+    Three: 3,
+    Four: 4,
+    Five: 5,
+    Six: 6,
+    Seven: 7,
+    Eigth: 8,
+    Nine: 9,
+    Ten: 10,
+    Jack: 11,
+    Queen: 12,
+    King: 13,
+}
+
+const suits = {
+    Clubs: 'clubs',
+    Diamonds: 'diamonds',
+    Heards: 'heards',
+    Spades: 'spades',
+}
+
+
+
 class Card {
+    /**@type {keyof suits} */
   suit = null;
+    /**@type {keyof faces} */
+
   face = null;
+    /**@type {boolean} */
+
   faceUp = false;
+  /**
+   * 
+   * @param {keyof suits} suit 
+   * @param {keyof faces} face 
+   * @param {boolean} faceUp 
+   */
 
   constructor(suit, face, faceUp = false) {
     this.suit = suit;
@@ -112,6 +148,12 @@ class Waste extends Deck{
 }
 
 class Foundation extends Deck{
+    suit = null;
+
+    constructor(cards, suit){
+        super(cards)
+        this.suit=suit
+    }
     canTake(index) {
       return this.size > 0 && index == this.topIndex;
       }
@@ -121,7 +163,11 @@ class Foundation extends Deck{
        */
     
       canPlace(cards) {
-        return false
+        if(Array.isArray(cards)){
+            return false
+        }
+        cards.suit == this.suit
+        
       }
 
 
