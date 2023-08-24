@@ -24,12 +24,16 @@ class Deck {
     return this.cards[topIndex];
   }
   get topIndex(){
-    return this.cards.length - 1
+    return this.size - 1
+
   }
+  get size(){
+    return this.cards.length 
+
   }
 
   canFlip() {
-    return this.cards.length > 0 && this.top.faceUp == false;
+    return this.size > 0 && this.top.faceUp == false;
   }
   canTake(index) {
     throw new TypeError(`Cannon  invoke abstract method`);
@@ -83,7 +87,7 @@ class Stock extends Deck{
 
 class Waste extends Deck{
     canTake(index) {
-      return this.cards.length > 0 && index == this.topIndex
+      return this.size > 0 && index == this.topIndex;
       }
       /**
        *
@@ -96,10 +100,39 @@ class Waste extends Deck{
 
 
       take(index) {
-        throw new Error(`Cannon  take from stock`);
+        if (this.index == false) {
+            throw new Error("Cannot take card");
+          }
+        this.cards.splice(index, this.size - index)
       }
       place(cards) {
-        throw new Error(`Cannon place on stock`);
+        throw new Error(`Cannon place on waste`);
+      }
+
+}
+
+class Foundation extends Deck{
+    canTake(index) {
+      return this.size > 0 && index == this.topIndex;
+      }
+      /**
+       *
+       * @param {Card | Card[]} cards
+       */
+    
+      canPlace(cards) {
+        return false
+      }
+
+
+      take(index) {
+        if (this.index == false) {
+            throw new Error("Cannot take card");
+          }
+        this.cards.splice(index, this.size - index)
+      }
+      place(cards) {
+        throw new Error(`Cannon place on waste`);
       }
 
 }
