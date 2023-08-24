@@ -21,6 +21,13 @@ const suits = {
     Spades: 'spades',
 }
 
+const colors = {
+    clubs: 'black',
+    diamonds: 'red',
+    heards: 'red',
+    spades: 'black',
+}
+
 
 
 class Card {
@@ -172,6 +179,30 @@ class Foundation extends Deck{
         }
        return(cards.suit == this.suit &&
          ((cards.face == faces.Ace && this.size == 0) || (this.size > 0 &&(cards.face - 1) ==this.top.face))) ;
+        
+        
+      }
+
+
+}
+
+class Pile extends Deck{
+   
+    canTake(index) {
+      return this.size > 0 && index == this.cards[index].faceUp;
+      }
+      /**
+       *
+       * @param {Card | Card[]} cards
+       */
+    
+      canPlace(cards) {
+        if(Array.isArray(cards)){
+            return false
+        }
+        const bottomCar = cards[0]
+       return ((cards.face == faces.King && this.size == 0)
+        || (this.size > 0 &&(bottomCar.face + 1) ==this.top.face)) ;
         
         
       }
