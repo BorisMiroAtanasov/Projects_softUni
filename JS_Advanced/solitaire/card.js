@@ -91,10 +91,25 @@ class Deck {
     this.top.faceUp = true;
   }
   take(index) {
-    throw new TypeError(`Cannon  invoke abstract method`);
+    if (this.canTake(index) == false) {
+        throw new Error("Cannot take card");
+      }
+    this.cards.splice(index, this.size - index)
   }
+   /**
+   *
+   * @param {Card | Card[]} cards
+   */
   place(cards) {
-    throw new TypeError(`Cannon  invoke abstract method`);
+    if (this.canPlace(index) == false) {
+        throw new Error("Cannot place card");
+      }
+      if(Array.isArray(cards) == false){
+        cards = [cards]
+      }
+
+      this.cards.push(...cards)
+
   }
 }
 
@@ -112,13 +127,7 @@ class Stock extends Deck{
       }
 
 
-      take(index) {
-        throw new Error(`Cannon  take from stock`);
-      }
-      place(cards) {
-        throw new Error(`Cannon place on stock`);
-      }
-
+    
 }
 
 class Waste extends Deck{
@@ -135,21 +144,16 @@ class Waste extends Deck{
       }
 
 
-      take(index) {
-        if (this.index == false) {
-            throw new Error("Cannot take card");
-          }
-        this.cards.splice(index, this.size - index)
-      }
-      place(cards) {
-        throw new Error(`Cannon place on waste`);
-      }
-
 }
 
 class Foundation extends Deck{
+    /**@type {keyof suits} */
     suit = null;
-
+    /**
+     * 
+     * @param {Card[]?} cards 
+     * @param {keyof suits} suit 
+     */
     constructor(cards, suit){
         super(cards)
         this.suit=suit
@@ -166,19 +170,11 @@ class Foundation extends Deck{
         if(Array.isArray(cards)){
             return false
         }
-        cards.suit == this.suit
+       return(cards.suit == this.suit &&
+         ((cards.face == faces.Ace && this.size == 0) || (this.size > 0 &&(cards.face - 1) ==this.top.face))) ;
+        
         
       }
 
-
-      take(index) {
-        if (this.index == false) {
-            throw new Error("Cannot take card");
-          }
-        this.cards.splice(index, this.size - index)
-      }
-      place(cards) {
-        throw new Error(`Cannon place on waste`);
-      }
 
 }
