@@ -36,6 +36,7 @@ export function createDeck(){
  */
 export function dealDeck(deck){
 
+
     const state = {
         stock: new Stock(),
         waste: new Waste(),
