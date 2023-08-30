@@ -11,9 +11,7 @@ export function createDeck(){
         }
         
     }
-
     return deck
-
 }
 /**
  * 
@@ -28,8 +26,7 @@ export function createDeck(){
         stok.push(card)
         
     }
-    deck.cards.push(...stok)
-
+    deck.cards.push(...stok);
 }
 
 /**
@@ -37,9 +34,28 @@ export function createDeck(){
  * @param {Deck} deck 
  * @returns {GameState}
  */
-
 export function dealDeck(deck){
-    
+
+    const state = {
+        stock: new Stock(),
+        waste: new Waste(),
+        foundations: {
+            [suits.Clubs] : new Foundation([],suits.Clubs),
+            [suits.Diamonds] : new Foundation([],suits.Diamonds),
+            [suits.Heards] : new Foundation([],suits.Heards),
+            [suits.Spades] : new Foundation([],suits.Spades),
+        },
+        piles: [
+            new Pile(),
+            new Pile(),
+            new Pile(),
+            new Pile(),
+            new Pile(),
+            new Pile(),
+            new Pile(),
+        ]
+    };
+
 }
 // export function dealDeck(deck){
     
@@ -59,14 +75,14 @@ export function dealDeck(deck){
 
 // }
 
-// /**
-//  * @typedef {Object} GameState
-//  * @property {Stock} stock
-//  * @property {Waste} waste
-//  * @property {Object} foundation
-//  * @property {Foundation} foundation.clubs
-//  * @property {Foundation} foundation.diamonds
-//  * @property {Foundation} foundation.hearts
-//  * @property {Foundation} foundation.spades
-//  * @property {[Pile,Pile,Pile,Pile,Pile,Pile,Pile]} piles
-//  */
+/**
+ * @typedef {Object} GameState
+ * @property {Stock} stock
+ * @property {Waste} waste
+ * @property {Object} foundation
+ * @property {Foundation} foundation.clubs
+ * @property {Foundation} foundation.diamonds
+ * @property {Foundation} foundation.hearts
+ * @property {Foundation} foundation.spades
+ * @property {[Pile,Pile,Pile,Pile,Pile,Pile,Pile]} piles
+ */
